@@ -1,7 +1,8 @@
 package com.digital.campaign.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,10 +46,20 @@ public class Question implements Serializable {
 	private String optionType;
 
 	@OneToMany(mappedBy = "questionId", cascade = CascadeType.ALL)
-	private Collection<Response> responseList;
+	private Set<Response> responseList;
 
 	public Question() {
 		super();
+	}
+
+	/**
+	 * @param questionText
+	 * @param optionType
+	 */
+	public Question(String questionText, String optionType) {
+		super();
+		this.questionText = questionText;
+		this.optionType = optionType;
 	}
 
 	public long getQuestionId() {
@@ -83,12 +94,21 @@ public class Question implements Serializable {
 		this.optionType = optionType;
 	}
 
-	public Collection<Response> getResponseList() {
+	public Set<Response> getResponseList() {
 		return responseList;
 	}
 
-	public void setResponseList(Collection<Response> responseList) {
+	public void setResponseList(Set<Response> responseList) {
 		this.responseList = responseList;
+	}
+	public void addResponse(Response response) {
+		if (response != null) {
+			if (responseList == null) {
+				responseList = new HashSet<>();
+			}
+			response.setQuestionId(this);
+			responseList.add(response);
+		}
 	}
 
 	@Override

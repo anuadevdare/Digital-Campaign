@@ -7,6 +7,8 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,6 +24,10 @@ public class CampaignResponse implements Serializable {
 	 * The unique campaign identifier of the campaign across TechPulse
 	 */
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "CampaignResponseId", columnDefinition = "BIGINT", length = 20,nullable = false)
+	private long campaignResponseId;
+	
 	@Column(name = "CampaignId", columnDefinition = "BIGINT", length = 20,nullable = false)
 	private long campaignId;
 	

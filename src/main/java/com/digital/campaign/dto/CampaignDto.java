@@ -1,6 +1,8 @@
 package com.digital.campaign.dto;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 public class CampaignDto {
 
@@ -20,31 +22,55 @@ public class CampaignDto {
 	 */
 	private Date endDate;
 
-	/**
-	 * To maintain to have values only when Status equal to Stopped or Ended
-	 */
-	private Date actualEndDate;
-
 	private long companyId;
 
+	private long noOfDevices;
+
+	private Collection<QuestionDto> questionList;
+
+	public CampaignDto() {
+		super();
+	}
+
 	/**
-	 * @param campaignId
 	 * @param name
 	 * @param description
+	 * @param questionList
 	 * @param startDate
 	 * @param endDate
 	 * @param actualEndDate
 	 * @param companyId
 	 */
-	public CampaignDto(long campaignId, String name, String description, Date startDate, Date endDate,
-			Date actualEndDate, long companyId) {
+	public CampaignDto(String name, String description, Collection<QuestionDto> questionList, Date startDate,
+			Date endDate, long companyId) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.questionList = questionList;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.companyId = companyId;
+	}
+
+	/**
+	 * @param campaignId
+	 * @param name
+	 * @param description
+	 * @param questionList
+	 * @param startDate
+	 * @param endDate
+	 * @param actualEndDate
+	 * @param companyId
+	 */
+	public CampaignDto(long campaignId, String name, String description, Set<QuestionDto> questionList,
+			Date startDate, Date endDate, long companyId) {
 		super();
 		this.campaignId = campaignId;
 		this.name = name;
 		this.description = description;
+		this.questionList = questionList;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.actualEndDate = actualEndDate;
 		this.companyId = companyId;
 	}
 
@@ -88,14 +114,6 @@ public class CampaignDto {
 		this.endDate = endDate;
 	}
 
-	public Date getActualEndDate() {
-		return actualEndDate;
-	}
-
-	public void setActualEndDate(Date actualEndDate) {
-		this.actualEndDate = actualEndDate;
-	}
-
 	public long getCompanyId() {
 		return companyId;
 	}
@@ -104,10 +122,26 @@ public class CampaignDto {
 		this.companyId = companyId;
 	}
 
+	public long getNoOfDevices() {
+		return noOfDevices;
+	}
+
+	public void setNoOfDevices(long noOfDevices) {
+		this.noOfDevices = noOfDevices;
+	}
+
+	public Collection<QuestionDto> getQuestionList() {
+		return questionList;
+	}
+
+	public void setQuestionList(Collection<QuestionDto> questionList) {
+		this.questionList = questionList;
+	}
+
 	@Override
 	public String toString() {
 		return "CampaignDto [campaignId=" + campaignId + ", name=" + name + ", description=" + description
-				+ ", startDate=" + startDate + ", endDate=" + endDate + ", actualEndDate=" + actualEndDate
+				+ ", questionList=" + questionList + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", companyId=" + companyId + "]";
 	}
 

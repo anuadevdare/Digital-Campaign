@@ -3,6 +3,7 @@ package com.digital.campaign.entity;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,13 +27,6 @@ public class Campaign implements Serializable {
 	@Column(name = "CampaignId", columnDefinition = "BIGINT", length = 10)
 	private long campaignId;
 	
-	@Column(name = "ClassVersion", length = 8, nullable = false)
-	private String classVersion;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DateTime", nullable = false)
-	private Date dateTime;
-
 	@Column(name = "Name", nullable = false)
 	private String name;
 
@@ -68,14 +62,70 @@ public class Campaign implements Serializable {
 	@Column(name = "CompanyId", nullable = false)
 	private long companyId;
 
-	@Column(name = "CeatedBy", nullable = false)
-	private String ceatedBy;
+	@Column(name = "CreatedBy", nullable = false)
+	private String createdBy;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CreatedDate")
+	private Date createdDate;
+	
+	@Column(name = "noOfDevices", columnDefinition = "BIGINT", length = 20)
+	private long noOfDevices;
+	
 	@OneToMany(mappedBy = "campaignId", cascade = CascadeType.ALL)
 	private Collection<Question> questionList;
 
 	public Campaign() {
 		super();
+	}
+
+	/**
+	 * @param name
+	 * @param description
+	 * @param startDate
+	 * @param endDate
+	 * @param actualEndDate
+	 * @param companyId
+	 */
+	public Campaign(String name, String description, Date startDate, Date endDate,long companyId,long noOfDevices ) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.companyId = companyId;
+		this.noOfDevices=noOfDevices;
+	}
+	/**
+	 * @param campaignId
+	 * @param name
+	 * @param description
+	 * @param status
+	 * @param startDate
+	 * @param endDate
+	 * @param actualEndDate
+	 * @param companyId
+	 * @param createdBy
+	 * @param createdDate
+	 * @param noOfDevices
+	 * @param questionList
+	 */
+	public Campaign(long campaignId, String name, String description, String status, Date startDate, Date endDate,
+			Date actualEndDate, long companyId, String createdBy, Date createdDate, long noOfDevices,
+			Collection<Question> questionList) {
+		super();
+		this.campaignId = campaignId;
+		this.name = name;
+		this.description = description;
+		this.status = status;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.actualEndDate = actualEndDate;
+		this.companyId = companyId;
+		this.createdBy = createdBy;
+		this.createdDate = createdDate;
+		this.noOfDevices = noOfDevices;
+		this.questionList = questionList;
 	}
 
 	public long getCampaignId() {
@@ -84,22 +134,6 @@ public class Campaign implements Serializable {
 
 	public void setCampaignId(long campaignId) {
 		this.campaignId = campaignId;
-	}
-
-	public String getClassVersion() {
-		return classVersion;
-	}
-
-	public void setClassVersion(String classVersion) {
-		this.classVersion = classVersion;
-	}
-
-	public Date getDateTime() {
-		return dateTime;
-	}
-
-	public void setDateTime(Date dateTime) {
-		this.dateTime = dateTime;
 	}
 
 	public String getName() {
@@ -157,13 +191,21 @@ public class Campaign implements Serializable {
 	public void setCompanyId(long companyId) {
 		this.companyId = companyId;
 	}
-
-	public String getCeatedBy() {
-		return ceatedBy;
+		
+	public String getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setCeatedBy(String ceatedBy) {
-		this.ceatedBy = ceatedBy;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public Collection<Question> getQuestionList() {
@@ -173,14 +215,30 @@ public class Campaign implements Serializable {
 	public void setQuestionList(Collection<Question> questionList) {
 		this.questionList = questionList;
 	}
+	
+	public long getNoOfDevices() {
+		return noOfDevices;
+	}
+	
+	public void setNoOfDevices(long noOfDevices) {
+		this.noOfDevices = noOfDevices;
+	}
+	
+	public void addQuestion(Question question) {
+		if (question != null) {
+			if (questionList == null) {
+				questionList = new HashSet<>();
+			}
+			question.setCampaignId(this);
+			questionList.add(question);
+		}
+	}
 
 	@Override
 	public String toString() {
-		return "Campaign [campaignId=" + campaignId + ", classVersion=" + classVersion + ", dateTime=" + dateTime
-				+ ", name=" + name + ", description=" + description + ", status=" + status + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", actualEndDate=" + actualEndDate + ", companyId=" + companyId
-				+ ", ceatedBy=" + ceatedBy + ", questionList=" + questionList + "]";
-	}
-
-	
+		return "Campaign [campaignId=" + campaignId + ", name=" + name + ", description=" + description + ", status="
+				+ status + ", startDate=" + startDate + ", endDate=" + endDate + ", actualEndDate=" + actualEndDate
+				+ ", companyId=" + companyId + ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", questionList=" + questionList + "]";
+	}	
 }

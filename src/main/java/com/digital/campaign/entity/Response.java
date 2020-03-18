@@ -40,6 +40,28 @@ public class Response implements Serializable {
 		super();
 	}
 
+	/**
+	 * @param responseId
+	 * @param questionId
+	 * @param responseOption
+	 */
+	public Response(long responseId, Question questionId, String responseOption) {
+		super();
+		this.responseId = responseId;
+		this.questionId = questionId;
+		this.responseOption = responseOption;
+	}
+
+	/**
+	 * @param responseId
+	 * @param responseOption
+	 */
+	public Response(long responseId, String responseOption) {
+		super();
+		this.responseId = responseId;
+		this.responseOption = responseOption;
+	}
+
 	public long getResponseId() {
 		return responseId;
 	}

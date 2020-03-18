@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,12 +22,13 @@ public class CampaignAnswers implements Serializable {
 	 * The unique question identifier within a campaign
 	 */
 	@Id
-	@Column(name = "QuestionId", columnDefinition = "BIGINT", length = 20, nullable = false)
-	private long questionId;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "CampaignAnswersId", columnDefinition = "BIGINT", length = 20, nullable = false)
+	private long campaignAnswersId;
 
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "campaignId", nullable = false)
+	@JoinColumn(name = "campaignResponseId", nullable = false)
 	private CampaignResponse campaignResponse;
 	/**
 	 * The unique response identifier tied to a question within a campaign
@@ -37,13 +40,17 @@ public class CampaignAnswers implements Serializable {
 		super();
 	}
 
-	public long getQuestionId() {
-		return questionId;
+	public long getCampaignAnswersId() {
+		return campaignAnswersId;
 	}
 
-	public void setQuestionId(long questionId) {
-		this.questionId = questionId;
+
+
+	public void setCampaignAnswersId(long campaignAnswersId) {
+		this.campaignAnswersId = campaignAnswersId;
 	}
+
+
 
 	public CampaignResponse getCampaignResponse() {
 		return campaignResponse;
@@ -63,9 +70,8 @@ public class CampaignAnswers implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CampaignAnswers [questionId=" + questionId + ", campaignResponse=" + campaignResponse + ", responseID="
-				+ responseID + "]";
+		return "CampaignAnswers [campaignAnswersId=" + campaignAnswersId + ", campaignResponse=" + campaignResponse
+				+ ", responseID=" + responseID + "]";
 	}
-	
 	
 }

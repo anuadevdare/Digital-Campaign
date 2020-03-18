@@ -9,6 +9,10 @@ public class ResponseDto {
 	 */
 	private String responseOption;
 
+	public ResponseDto() {
+		super();
+	}
+
 	/**
 	 * @param responseId
 	 * @param responseOption
