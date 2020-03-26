@@ -5,9 +5,9 @@ import java.util.Set;
 
 import com.digital.campaign.dao.DtoEntityConverter;
 import com.digital.campaign.dto.QuestionDto;
-import com.digital.campaign.dto.ResponseDto;
+import com.digital.campaign.dto.AnswerDto;
 import com.digital.campaign.entity.Question;
-import com.digital.campaign.entity.Response;
+import com.digital.campaign.entity.Answer;
 
 /**
  * The QuestionDaoImpl class is responsible for converting QuestionDto to
@@ -15,7 +15,7 @@ import com.digital.campaign.entity.Response;
  */
 
 public class QuestionImpl implements DtoEntityConverter<QuestionDto, Question> {
-	ResponseImpl responseDaoImpl = new ResponseImpl();
+	AnswerImpl responseDaoImpl = new AnswerImpl();
 
 	/**
 	 * used to convert QuestionDto to Question
@@ -25,11 +25,12 @@ public class QuestionImpl implements DtoEntityConverter<QuestionDto, Question> {
 	 * 
 	 */
 	@Override
-	public Question dtoToEntityConvert(QuestionDto dto) {
-		Question entity = new Question(dto.getQuestionText(), dto.getOptionType());
-		Set<Response> answers = new HashSet<Response>();
-		for (ResponseDto responseDto : dto.getResponseList()) {
-			Response response = responseDaoImpl.dtoToEntityConvert(responseDto);
+	public Question convertDtoToEntity(QuestionDto dto) {
+		Question entity = new Question(dto.getQuestionId(), dto.getQuestionText(), dto.getOptionType(),
+				dto.getQuestionPosition());
+		Set<Answer> answers = new HashSet<>();
+		for (AnswerDto responseDto : dto.getResponseList()) {
+			Answer response = responseDaoImpl.convertDtoToEntity(responseDto);
 			answers.add(response);
 		}
 		entity.setResponseList(answers);
@@ -39,18 +40,18 @@ public class QuestionImpl implements DtoEntityConverter<QuestionDto, Question> {
 	/**
 	 * used to convert Question to QuestionDto
 	 * 
-	 * @param Question the  object
+	 * @param Question the entity object
 	 * @return QuestionDto the DTO object
 	 * 
 	 */
 
 	@Override
-	public QuestionDto entityToDtoConvert(Question entity) {
-		QuestionDto questionDto=new QuestionDto(entity.getQuestionText(),entity.getOptionType());
-	
-		Set<ResponseDto> responseList = new HashSet<ResponseDto>();
-		for (Response response : entity.getResponseList()) {
-			ResponseDto responseDto=responseDaoImpl.entityToDtoConvert(response);
+	public QuestionDto convertEntityToDto(Question entity) {
+		QuestionDto questionDto = new QuestionDto(entity.getQuestionId(), entity.getQuestionText(),
+				entity.getOptionType(), entity.getQuestionPosition());
+		Set<AnswerDto> responseList = new HashSet<>();
+		for (Answer response : entity.getResponseList()) {
+			AnswerDto responseDto = responseDaoImpl.convertEntityToDto(response);
 			responseList.add(responseDto);
 		}
 		questionDto.setResponseList(responseList);

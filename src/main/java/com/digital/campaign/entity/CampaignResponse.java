@@ -16,7 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "TM_CampaignResponse")
+@Table(name = "TM_CAMPAIGN_RESPONSE")
 public class CampaignResponse implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -25,42 +25,50 @@ public class CampaignResponse implements Serializable {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "CampaignResponseId", columnDefinition = "BIGINT", length = 20,nullable = false)
+	@Column(name = "CAMPAIGN_RESPONSE_ID", columnDefinition = "BIGINT", length = 20,nullable = false)
 	private long campaignResponseId;
 	
-	@Column(name = "CampaignId", columnDefinition = "BIGINT", length = 20,nullable = false)
+	@Column(name = "CAMPAIGN_ID", columnDefinition = "BIGINT", length = 20,nullable = false)
 	private long campaignId;
-	
-	@Column(name = "ClassVersion", length = 8, nullable = false)
-	private String classVersion;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DateTime", nullable = false)
-	private Date dateTime;
 	
 	/**
 	 * The unique company identifier across TechPulse
 	 */
-	@Column(name = "CompanyId",columnDefinition = "BIGINT",length=10, nullable = false)
+	@Column(name = "COMAPNY_ID",columnDefinition = "BIGINT",length=10, nullable = false)
 	private long companyId;
 	
 	/**
 	 * The unique user identifier across TechPulse
 	 */
-	@Column(name = "UserId", columnDefinition = "BIGINT", length = 20,nullable = false)
+	@Column(name = "USER_ID", columnDefinition = "BIGINT", length = 20,nullable = false)
 	private long userId;
 	
 	/**
 	 * The unique device identifier across TechPulse
 	 */
-	@Column(name = "DeviceId", columnDefinition = "BIGINT", length = 20,nullable = false)
+	@Column(name = "DEVICE_ID", columnDefinition = "BIGINT", length = 20,nullable = false)
 	private long deviceId;
+	
+	@Column(name = "CREATED_BY", nullable = false)
+	private String createdBy;
 
-	@OneToMany(mappedBy = "campaignResponse", cascade = CascadeType.ALL)
-	private Collection<CampaignAnswers> answerList;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE")
+	private Date createdDate;
+
+	@OneToMany(mappedBy = "campaignResponseId", cascade = CascadeType.ALL)
+	private Collection<CampaignAnswer> answerList;
 
 	public CampaignResponse() {
 		super();
+	}
+
+	public long getCampaignResponseId() {
+		return campaignResponseId;
+	}
+
+	public void setCampaignResponseId(long campaignResponseId) {
+		this.campaignResponseId = campaignResponseId;
 	}
 
 	public long getCampaignId() {
@@ -69,22 +77,6 @@ public class CampaignResponse implements Serializable {
 
 	public void setCampaignId(long campaignId) {
 		this.campaignId = campaignId;
-	}
-
-	public String getClassVersion() {
-		return classVersion;
-	}
-
-	public void setClassVersion(String classVersion) {
-		this.classVersion = classVersion;
-	}
-
-	public Date getDateTime() {
-		return dateTime;
-	}
-
-	public void setDateTime(Date dateTime) {
-		this.dateTime = dateTime;
 	}
 
 	public long getCompanyId() {
@@ -111,20 +103,35 @@ public class CampaignResponse implements Serializable {
 		this.deviceId = deviceId;
 	}
 
-	public Collection<CampaignAnswers> getAnswerList() {
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Collection<CampaignAnswer> getAnswerList() {
 		return answerList;
 	}
 
-	public void setAnswerList(Collection<CampaignAnswers> answerList) {
+	public void setAnswerList(Collection<CampaignAnswer> answerList) {
 		this.answerList = answerList;
 	}
 
 	@Override
 	public String toString() {
-		return "CampaignResponse [campaignId=" + campaignId + ", classVersion=" + classVersion + ", dateTime="
-				+ dateTime + ", companyId=" + companyId + ", userId=" + userId + ", deviceId=" + deviceId
-				+ ", answerList=" + answerList + "]";
+		return "CampaignResponse [campaignResponseId=" + campaignResponseId + ", campaignId=" + campaignId
+				+ ", companyId=" + companyId + ", userId=" + userId + ", deviceId=" + deviceId + ", createdBy="
+				+ createdBy + ", createdDate=" + createdDate + ", answerList=" + answerList + "]";
 	}
-	
-	
+
 }

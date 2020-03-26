@@ -13,34 +13,24 @@ public class QuestionDto {
 
 	private String optionType;
 	
-	private Collection<ResponseDto> responseList;
+	private int questionPosition;
+	
+	private Collection<AnswerDto> responseList;
 	
 	public QuestionDto() {
 		super();
 	}
-
+	
 	/**
-	 * @param questionId
 	 * @param questionText
 	 * @param optionType
-	 * @param responseList
 	 */
-	public QuestionDto(long questionId, String questionText, String optionType, Collection<ResponseDto> responseList) {
+	public QuestionDto(long questionId,String questionText, String optionType,int questionPosition) {
 		super();
 		this.questionId = questionId;
 		this.questionText = questionText;
 		this.optionType = optionType;
-		this.responseList = responseList;
-	}
-
-	/**
-	 * @param questionText
-	 * @param optionType
-	 */
-	public QuestionDto(String questionText, String optionType) {
-		super();
-		this.questionText = questionText;
-		this.optionType = optionType;
+		this.questionPosition=questionPosition;
 	}
 
 
@@ -67,18 +57,27 @@ public class QuestionDto {
 	public void setOptionType(String optionType) {
 		this.optionType = optionType;
 	}
-	public Collection<ResponseDto> getResponseList() {
+	
+	public int getQuestionPosition() {
+		return questionPosition;
+	}
+
+	public void setQuestionPosition(int questionPosition) {
+		this.questionPosition = questionPosition;
+	}
+
+	public Collection<AnswerDto> getResponseList() {
 		return responseList;
 	}
 
-	public void setResponseList(Collection<ResponseDto> responseList) {
+	public void setResponseList(Collection<AnswerDto> responseList) {
 		this.responseList = responseList;
 	}
 
 	@Override
 	public String toString() {
 		return "QuestionDto [questionId=" + questionId + ", questionText=" + questionText + ", optionType=" + optionType
-				+ ", responseList=" + responseList + "]";
+				+ ", questionPosition=" + questionPosition + ", responseList=" + responseList + "]";
 	}
 
 }

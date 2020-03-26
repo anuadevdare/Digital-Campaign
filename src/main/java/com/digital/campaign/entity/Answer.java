@@ -10,12 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "TM_Response")
-public class Response implements Serializable {
+@Table(name = "TM_ANSWER")
+public class Answer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	/**
@@ -23,51 +22,68 @@ public class Response implements Serializable {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ResponseId")
-	private long responseId;
-
+	@Column(name = "ANSWER_ID")
+	private long answerId;
+	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "questionId", nullable = false)
+	@JoinColumn(name = "QUESTION_ID")
 	private Question questionId;
+	
 	/**
 	 * The response options available for a question in the native language.
 	 */
-	@Column(name = "ResponseOption", nullable = false)
-	private String responseOption;
+	@Column(name = "ANSWER_TEXT", nullable = false)
+	private String answerText;
 	
-	public Response() {
+	public Answer() {
 		super();
 	}
 
 	/**
-	 * @param responseId
+	 * @param answerId
 	 * @param questionId
-	 * @param responseOption
+	 * @param answerText
 	 */
-	public Response(long responseId, Question questionId, String responseOption) {
+	public Answer(long answerId, Question questionId, String answerText) {
 		super();
-		this.responseId = responseId;
+		this.answerId = answerId;
 		this.questionId = questionId;
-		this.responseOption = responseOption;
+		this.answerText = answerText;
 	}
 
 	/**
-	 * @param responseId
-	 * @param responseOption
+	 * @param answerId
+	 * @param answerText
 	 */
-	public Response(long responseId, String responseOption) {
+	public Answer(long answerId, String answerText) {
 		super();
-		this.responseId = responseId;
-		this.responseOption = responseOption;
+		this.answerId = answerId;
+		this.answerText = answerText;
+	}
+
+	public long getAnswerId() {
+		return answerId;
+	}
+
+	public void setAnswerId(long answerId) {
+		this.answerId = answerId;
+	}
+
+	public String getAnswerText() {
+		return answerText;
+	}
+
+	public void setAnswerText(String answerText) {
+		this.answerText = answerText;
 	}
 
 	public long getResponseId() {
-		return responseId;
+		return answerId;
 	}
 
 	public void setResponseId(long responseId) {
-		this.responseId = responseId;
+		this.answerId = responseId;
 	}
 
 	public Question getQuestionId() {
@@ -78,19 +94,9 @@ public class Response implements Serializable {
 		this.questionId = questionId;
 	}
 
-	public String getResponseOption() {
-		return responseOption;
-	}
-
-	public void setResponseOption(String responseOption) {
-		this.responseOption = responseOption;
-	}
-
 	@Override
 	public String toString() {
-		return "Response [responseId=" + responseId + ", questionId=" + questionId + ", responseOption="
-				+ responseOption + "]";
+		return "Answer [answerId=" + answerId + ", questionId=" + questionId + ", answerText=" + answerText + "]";
 	}
 
-	
 }

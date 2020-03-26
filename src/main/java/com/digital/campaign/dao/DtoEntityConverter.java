@@ -19,18 +19,18 @@ public interface DtoEntityConverter<T, E> {
      * 
      * @param dtoObject
      *            DTO object to convert from
-     * @param entityObject
+     * @return entityObject
      *            Entity object to convert to
      */
-    E dtoToEntityConvert(final T dto);
+    E convertDtoToEntity(final T dto);
 
     /**
      * Convert dtoObject to entityObject.
-     * 
-     * @param dtoObject
-     *            DTO object to convert from
+     *
      * @param entityObject
      *            Entity object to convert to
+     *@return dtoObject
+     *            DTO object to convert from
      */
-    T entityToDtoConvert(final E entity);
+    T convertEntityToDto(final E entity);
 }

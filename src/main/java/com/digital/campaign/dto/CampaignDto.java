@@ -2,7 +2,6 @@ package com.digital.campaign.dto;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 
 public class CampaignDto {
 
@@ -12,6 +11,7 @@ public class CampaignDto {
 
 	private String description;
 
+	private String status;
 	/**
 	 * To maintain start date of the campaign as defined in TechPulse
 	 */
@@ -25,53 +25,79 @@ public class CampaignDto {
 	private long companyId;
 
 	private long noOfDevices;
+	
+	private String createdBy;
+	
+	private Date createdDate;
+	
+	private Date actualEndDate;
 
 	private Collection<QuestionDto> questionList;
 
 	public CampaignDto() {
 		super();
 	}
-
+	
 	/**
+	 * @param campaignId
 	 * @param name
 	 * @param description
-	 * @param questionList
+	 * @param status
 	 * @param startDate
 	 * @param endDate
-	 * @param actualEndDate
 	 * @param companyId
+	 * @param noOfDevices
+	 * @param createdBy
+	 * @param createdDate
+	 * @param actualEndDate
 	 */
-	public CampaignDto(String name, String description, Collection<QuestionDto> questionList, Date startDate,
-			Date endDate, long companyId) {
+	public CampaignDto(long campaignId, String name, String description, String status, Date startDate, Date endDate,
+			long companyId, long noOfDevices, String createdBy, Date createdDate, Date actualEndDate) {
 		super();
+		this.campaignId = campaignId;
 		this.name = name;
 		this.description = description;
-		this.questionList = questionList;
+		this.status = status;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.companyId = companyId;
+		this.noOfDevices = noOfDevices;
+		this.createdBy = createdBy;
+		this.createdDate = createdDate;
+		this.actualEndDate = actualEndDate;
 	}
+
 
 	/**
 	 * @param campaignId
 	 * @param name
 	 * @param description
-	 * @param questionList
+	 * @param status
 	 * @param startDate
 	 * @param endDate
-	 * @param actualEndDate
 	 * @param companyId
+	 * @param noOfDevices
+	 * @param createdBy
+	 * @param createdDate
+	 * @param actualEndDate
+	 * @param questionList
 	 */
-	public CampaignDto(long campaignId, String name, String description, Set<QuestionDto> questionList,
-			Date startDate, Date endDate, long companyId) {
+	public CampaignDto(long campaignId, String name, String description, String status, Date startDate, Date endDate,
+			long companyId, long noOfDevices, String createdBy, Date createdDate, Date actualEndDate,
+			Collection<QuestionDto> questionList) {
 		super();
 		this.campaignId = campaignId;
 		this.name = name;
 		this.description = description;
-		this.questionList = questionList;
+		this.status = status;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.companyId = companyId;
+		this.noOfDevices = noOfDevices;
+		this.createdBy = createdBy;
+		this.createdDate = createdDate;
+		this.actualEndDate = actualEndDate;
+		this.questionList = questionList;
 	}
 
 	public long getCampaignId() {
@@ -96,6 +122,14 @@ public class CampaignDto {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Date getStartDate() {
@@ -128,6 +162,30 @@ public class CampaignDto {
 
 	public void setNoOfDevices(long noOfDevices) {
 		this.noOfDevices = noOfDevices;
+	}
+	
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getActualEndDate() {
+		return actualEndDate;
+	}
+
+	public void setActualEndDate(Date actualEndDate) {
+		this.actualEndDate = actualEndDate;
 	}
 
 	public Collection<QuestionDto> getQuestionList() {

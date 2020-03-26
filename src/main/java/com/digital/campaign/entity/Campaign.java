@@ -17,59 +17,58 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "TM_Campaign")
+@Table(name = "TM_CAMPAIGN",schema ="SYS" )
 public class Campaign implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "CampaignId", columnDefinition = "BIGINT", length = 10)
+	@Column(name = "CAMPAIGN_ID", columnDefinition = "BIGINT", length = 10)
 	private long campaignId;
 	
-	@Column(name = "Name", nullable = false)
+	@Column(name = "NAME", nullable = false)
 	private String name;
 
-	@Column(name = "Description")
+	@Column(name = "DESCRIPTION")
 	private String description;
 	/**
 	 * To maintain The various states of a campaign
 	 */
-	@Column(name = "Status", length = 16, nullable = false)
+	@Column(name = "STATUS", length = 16, nullable = false)
 	private String status;
 
 	/**
 	 * To maintain start date of the campaign as defined in TechPulse
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "StartDate", nullable = false)
+	@Column(name = "START_DATE", nullable = false)
 	private Date startDate;
 
 	/**
 	 * To maintain end date of the campaign as defined in TechPulse
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "EndDate", nullable = false)
+	@Column(name = "END_DATE", nullable = false)
 	private Date endDate;
 
 	/**
 	 * To maintain to have values only when Status equal to Stopped or Ended
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ActualEndDate")
+	@Column(name = "ACTUAL_END_DATE")
 	private Date actualEndDate;
 
-	@Column(name = "CompanyId", nullable = false)
+	@Column(name = "COMPANY_ID", nullable = false)
 	private long companyId;
 
-	@Column(name = "CreatedBy", nullable = false)
+	@Column(name = "CREATED_BY", nullable = false)
 	private String createdBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CreatedDate")
+	@Column(name = "CREATED_DATE")
 	private Date createdDate;
 	
-	@Column(name = "noOfDevices", columnDefinition = "BIGINT", length = 20)
+	@Column(name = "NO_OF_DEVICES", columnDefinition = "BIGINT", length = 20)
 	private long noOfDevices;
 	
 	@OneToMany(mappedBy = "campaignId", cascade = CascadeType.ALL)
@@ -87,8 +86,9 @@ public class Campaign implements Serializable {
 	 * @param actualEndDate
 	 * @param companyId
 	 */
-	public Campaign(String name, String description, Date startDate, Date endDate,long companyId,long noOfDevices ) {
+	public Campaign(long campaignId,String name, String description, Date startDate, Date endDate,long companyId,long noOfDevices ) {
 		super();
+		this.campaignId = campaignId;
 		this.name = name;
 		this.description = description;
 		this.startDate = startDate;
@@ -96,38 +96,7 @@ public class Campaign implements Serializable {
 		this.companyId = companyId;
 		this.noOfDevices=noOfDevices;
 	}
-	/**
-	 * @param campaignId
-	 * @param name
-	 * @param description
-	 * @param status
-	 * @param startDate
-	 * @param endDate
-	 * @param actualEndDate
-	 * @param companyId
-	 * @param createdBy
-	 * @param createdDate
-	 * @param noOfDevices
-	 * @param questionList
-	 */
-	public Campaign(long campaignId, String name, String description, String status, Date startDate, Date endDate,
-			Date actualEndDate, long companyId, String createdBy, Date createdDate, long noOfDevices,
-			Collection<Question> questionList) {
-		super();
-		this.campaignId = campaignId;
-		this.name = name;
-		this.description = description;
-		this.status = status;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.actualEndDate = actualEndDate;
-		this.companyId = companyId;
-		this.createdBy = createdBy;
-		this.createdDate = createdDate;
-		this.noOfDevices = noOfDevices;
-		this.questionList = questionList;
-	}
-
+	
 	public long getCampaignId() {
 		return campaignId;
 	}

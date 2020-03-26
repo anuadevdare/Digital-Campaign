@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+
+
 /**
  * ResponseExceptionHandler handles exceptions of throughout a whole application
  * by using @ControllerAdvice annotations
@@ -24,7 +26,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
-	private static final Logger LOGGER = LogManager.getLogger(ResponseExceptionHandler.class);
+	private static final Logger log = LogManager.getLogger(ResponseExceptionHandler.class);
 
 	/**
 	 * return the customize Exception response for any exception
@@ -35,7 +37,7 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
-		LOGGER.error("Http status is {} and Error is {}.", HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+		log.error("Http status is {} and Error is {}.", HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
 		return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
@@ -56,8 +58,32 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 		for (ObjectError error : ex.getBindingResult().getGlobalErrors()) {
 			errors.add(error.getDefaultMessage());
 		}
-		LOGGER.error("Http status is {} and Error is {}.", HttpStatus.BAD_REQUEST, errors.toString());
+		log.error("Http status is {} and Error is {}.", HttpStatus.BAD_REQUEST, errors.toString());
 		return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
+	}
+	
+	/**
+	 * return the customize Exception response for entity not found exception
+	 * 
+	 * @return object of Exception response class with the proper massage and
+	 *         NOT_FOUND as a status
+	 */
+	@ExceptionHandler(EntityNotFoundException.class)
+	public final ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex, WebRequest request) {
+		log.error("Http status is {} and Error is {}.", HttpStatus.NOT_FOUND, ex.getMessage());
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+	}
+
+	/**
+	 * return the customize Exception response for entity not found exception
+	 * 
+	 * @return object of Exception response class with the proper massage and
+	 *         NOT_FOUND as a status
+	 */
+	@ExceptionHandler(CampaingnAlreadyStartedException.class)
+	public final ResponseEntity<Object> handleCampaingnAlreadyStartedException(CampaingnAlreadyStartedException ex, WebRequest request) {
+		log.error("Http status is {} and Error is {}.", HttpStatus.BAD_REQUEST, ex.getMessage());
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
 }

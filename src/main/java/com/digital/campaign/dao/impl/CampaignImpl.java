@@ -23,12 +23,12 @@ public class CampaignImpl implements DtoEntityConverter<CampaignDto, Campaign> {
 	 * @return Campaign the entity object
 	 */
 	@Override
-	public Campaign dtoToEntityConvert(CampaignDto dto) {
-		Campaign campaign = new Campaign(dto.getName(), dto.getDescription(), dto.getStartDate(), dto.getEndDate(),
-				dto.getCompanyId(), dto.getNoOfDevices());
-		Set<Question> question = new HashSet<Question>();
+	public Campaign convertDtoToEntity(CampaignDto dto) {
+		Campaign campaign = new Campaign(dto.getCampaignId(), dto.getName(), dto.getDescription(), dto.getStartDate(),
+				dto.getEndDate(), dto.getCompanyId(), dto.getNoOfDevices());
+		Set<Question> question = new HashSet<>();
 		for (QuestionDto questionDto : dto.getQuestionList()) {
-			Question quesEntity = questionDaoImpl.dtoToEntityConvert(questionDto);
+			Question quesEntity = questionDaoImpl.convertDtoToEntity(questionDto);
 			question.add(quesEntity);
 		}
 		campaign.setQuestionList(question);
@@ -36,9 +36,18 @@ public class CampaignImpl implements DtoEntityConverter<CampaignDto, Campaign> {
 	}
 
 	@Override
-	public CampaignDto entityToDtoConvert(Campaign entity) {
+	public CampaignDto convertEntityToDto(Campaign entity) {
 
-		return null;
+		CampaignDto campaignDto = new CampaignDto(entity.getCampaignId(), entity.getName(), entity.getDescription(),
+				entity.getStatus(), entity.getStartDate(), entity.getEndDate(), entity.getCompanyId(),
+				entity.getNoOfDevices(), entity.getCreatedBy(), entity.getCreatedDate(), entity.getActualEndDate());
+		Set<QuestionDto> questions = new HashSet<>();
+		for (Question question : entity.getQuestionList()) {
+			QuestionDto questionDto = questionDaoImpl.convertEntityToDto(question);
+			questions.add(questionDto);
+		}
+		campaignDto.setQuestionList(questions);
+		return campaignDto;
 	}
 
 }
