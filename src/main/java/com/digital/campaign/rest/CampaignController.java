@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.digital.campaign.dto.CampaignDto;
+import com.digital.campaign.dto.FilterParams;
 import com.digital.campaign.service.CampaignService;
 
 /**
@@ -42,6 +43,11 @@ public class CampaignController {
 	public CampaignDto getCampaignByCampaignId(@PathVariable long campaignId)
 	{
 		return campaignService.getCampaignByCampaignId(campaignId);
+	}
+	@GetMapping(path="/findcampaignbyfilter")
+	public List<CampaignDto> getCampaignByFilter(@RequestBody FilterParams filterParams)
+	{
+		return campaignService.campaignbyfilter(filterParams);
 	}
 	
 	@GetMapping(path="/campaignList")

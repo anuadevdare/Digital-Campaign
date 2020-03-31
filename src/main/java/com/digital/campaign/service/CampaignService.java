@@ -2,9 +2,8 @@ package com.digital.campaign.service;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import com.digital.campaign.dto.CampaignDto;
+import com.digital.campaign.dto.FilterParams;
 /**
  * The CampaignService responsible to create the campaign for multiple questions
  * and their possible answers for the particular company,Display list of all
@@ -21,5 +20,7 @@ public interface CampaignService {
 
 	public void deleteByCampignId(long campaignId);
 
-	public void updateCampaign(@Valid CampaignDto campaignDto);
+	public void updateCampaign(CampaignDto campaignDto);
+
+	public List<CampaignDto> campaignbyfilter(FilterParams filterParams);
 }

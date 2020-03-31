@@ -2,13 +2,12 @@ package com.digital.campaign.service.impl;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.digital.campaign.dao.CampaignDao;
 import com.digital.campaign.dto.CampaignDto;
+import com.digital.campaign.dto.FilterParams;
 import com.digital.campaign.service.CampaignService;
 
 /**
@@ -44,9 +43,14 @@ public class CampaignServiceImpl implements CampaignService {
 	}
 
 	@Override
-	public void updateCampaign(@Valid CampaignDto campaignDto) {
+	public void updateCampaign(CampaignDto campaignDto) {
 		campaignDao.updateCampaign(campaignDto);
 
+	}
+
+	@Override
+	public List<CampaignDto> campaignbyfilter(FilterParams filterParams) {
+		return campaignDao.campaignbyfilter(filterParams);
 	}
 
 }
